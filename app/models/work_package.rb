@@ -26,7 +26,7 @@ class WorkPackage < ActiveRecord::Base
   belongs_to :type
   belongs_to :status, :class_name => 'IssueStatus', :foreign_key => 'status_id'
   belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
-  belongs_to :assigned_to, :class_name => 'User', :foreign_key => 'assigned_to_id'
+  belongs_to :assigned_to, :class_name => 'Principal', :foreign_key => 'assigned_to_id'
   belongs_to :responsible, :class_name => "User", :foreign_key => "responsible_id"
   belongs_to :fixed_version, :class_name => 'Version', :foreign_key => 'fixed_version_id'
   belongs_to :priority, :class_name => 'IssuePriority', :foreign_key => 'priority_id'
@@ -154,7 +154,20 @@ class WorkPackage < ActiveRecord::Base
 
   # Returns a SQL conditions string used to find all work units visible by the specified user
   def self.visible_condition(user, options={})
-    Project.allowed_to_condition(user, :view_work_packages, options)
+    Project.allowed_to_condition(user, :view_work_packages, options) do |role, user|
+      case role.issues_visibility
+      when 'all'
+        nil
+      when 'default'
+        user_ids = [user.id] + user.groups.map(&:id)
+        "(#{table_name}.is_private = #{connection.quoted_false} OR #{table_name}.author_id = #{user.id} OR #{table_name}.assigned_to_id IN (#{user_ids}))"
+      when 'own'
+        user_ids = [user.id] + user.groups.map(&:id)
+        "(#{table_name}.author_id = #{user.id} OR #{table_name}.assigned_to_id IN (#{user_ids}))"
+      else
+        '1=0'
+      end
+    end
   end
 
   WorkPackageJournal.class_eval do
@@ -176,7 +189,18 @@ class WorkPackage < ActiveRecord::Base
 
   # Returns true if usr or current user is allowed to view the work_package
   def visible?(usr=nil)
-    (usr || User.current).allowed_to?(:view_work_packages, self.project)
+    (usr || User.current).allowed_to?(:view_work_packages, self.project) do |role, user|
+      case role.issues_visibility
+      when 'all'
+        true
+      when 'default'
+        !self.is_private? || self.author == user || user.is_or_belongs_to?(assigned_to)
+      when 'own'
+        self.author == user || user.is_or_belongs_to?(assigned_to)
+      else
+        false
+      end
+    end
   end
 
   def copy_from(arg, options = {})
