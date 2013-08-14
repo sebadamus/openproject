@@ -9,8 +9,7 @@ modify it under the terms of the GNU General Public License version 3.
 See doc/COPYRIGHT.rdoc for more details.
 
 ++#%>
-
-<h3><%=l(:label_assigned_to_me_issues)%> (<%= Issue.visible.open.count(:conditions => {:assigned_to_id => User.current.id})%>)</h3>
+<h3><%=l(:label_assigned_to_me_issues)%> (<%= Issue.visible.open.count(:conditions => {:assigned_to_id => ([User.current.id] + User.current.group_ids)})%>)</h3>
 
 <% assigned_issues = Issue.visible.open.find(:all,
                                 :conditions => {:assigned_to_id => User.current.id},
