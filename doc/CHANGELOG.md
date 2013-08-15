@@ -2,6 +2,7 @@
 
 * `#1417` Enable default behavior for types
 * `#1631` Remove documents from core
+* `#1504` Initial selection of possible project members wrong (accessibility mode)
 
 ## 3.0.0pre11
 
