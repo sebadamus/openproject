@@ -78,7 +78,7 @@ class IssueTest < ActiveSupport::TestCase
 
   def test_create_with_group_assignment
     with_settings :issue_group_assignment => '1' do
-      (issue = Issue.new).force_attributes = {:project_id => 2, :tracker_id => 1, :author_id => 1, :subject => 'Group assignment', :assigned_to_id => 11}
+      (issue = Issue.new).force_attributes = {:project_id => 2, :type_id => 1, :author_id => 1, :subject => 'Group assignment', :assigned_to_id => 11}
       assert issue.save
       assert_kind_of Group, issue.assigned_to
       assert_equal Group.find(11), issue.assigned_to
