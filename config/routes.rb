@@ -207,7 +207,7 @@ OpenProject::Application.routes.draw do
 
     resources :work_packages, :only => [:new, :create, :index] do
       get :new_type, :on => :collection
-      post :preview, :on => :collection
+      put :preview, :on => :collection
     end
 
     resources :activity, :activities, :only => :index, :controller => 'activities'
@@ -296,7 +296,7 @@ OpenProject::Application.routes.draw do
 
   resources :work_packages, :only => [:show, :edit, :update, :index] do
     get :new_type, :on => :member
-    post :preview, :on => :member
+    put :preview, :on => :member
 
     resources :relations, :controller => 'work_package_relations', :only => [:create, :destroy]
 
