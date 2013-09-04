@@ -8,6 +8,7 @@
 * `#1875` Added test steps to reuse steps for my page, my project page, and documents
 * `#1876` Timelines do not show work packages when there is no status reporting
 * `#1896` Moved visibility-tests for issues into specs for workpackages
+* `#1918` Custom fields are not displayed when issue is created
 
 ## 3.0.0pre14
 
