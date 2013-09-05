@@ -1,5 +1,6 @@
 # Changelog
 
+* `#1418` Additional changes: Change links to issues/planning elements to use work_packages controller
 * `#1755` Migrate helper-tests for issues into specs for work package
 * `#1766` Fixed bug: Viewing diff of Work Package description results in error 500
 * `#1789` Move validation to Work Package
