@@ -1,6 +1,6 @@
 # Changelog
 
-# `#1557` Timeline Report Selection Not Visible
+* `#1557` Timeline Report Selection Not Visible
 * `#1755` Migrate helper-tests for issues into specs for work package
 * `#1766` Fixed bug: Viewing diff of Work Package description results in error 500
 * `#1767` Fixed bug: Viewing changesets results in "page not found"
@@ -11,6 +11,7 @@
 * `#1876` Timelines do not show work packages when there is no status reporting
 * `#1896` Moved visibility-tests for issues into specs for workpackages
 * `#1912` Merge column project type with column planning element type
+* `#1934` [Timelines] Table Loading takes really long 
 
 ## 3.0.0pre14
 
