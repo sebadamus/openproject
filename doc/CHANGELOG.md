@@ -1,5 +1,7 @@
 # Changelog
 
+* `#1923` Add permission that allows hiding repository statistics on commits per author
+
 ## 3.0.0pre15
 
 * `#1301` Ajax call when logged out should open a popup window
